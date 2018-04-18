@@ -23,7 +23,13 @@ var baseRegex = "\\s*[@#]\\s*sourceMappingURL\\s*=\\s*([^\\s]*)(?![\\S\\s]*sourc
 
 module.exports = function(input, inputMap) {
     this.cacheable && this.cacheable();
-    var options = loaderUtils.getOptions(this)
+    var options = Object.assign(
+        {
+            skipFileURLWarnings: true,
+            bundleHttp: true,
+        },
+        loaderUtils.getOptions(this)
+    )
 	var resolve = this.resolve;
 	var addDependency = this.addDependency;
 	var emitWarning = this.emitWarning || function() {};
@@ -79,12 +85,13 @@ module.exports = function(input, inputMap) {
 	    async.map(missingSources, function(source, callback) {
                 // source is the source "url" file://,http:// or a plain OS file path that needs resolving
                 if(source.startsWith("http")) {
-                    if(options && !!!options.bundleHttp) callback(null, null)
+                    if(!!!options.bundleHttp) callback(null, null)
                     else {
                         fetch(source)
                             .then(resp => {
                                 if(resp.ok) {
                                     resp.text().then(content =>  {
+                                        addDependency(source)
                                         callback(null, {
                                             source: source,
                                             content: content,
@@ -102,7 +109,8 @@ module.exports = function(input, inputMap) {
                             const localsource = source.slice(7)
                             fs.readFile(localsource, "utf-8", function(err, content) {
                                 if(err) {
-                                    emitWarning("Could open source file '"+result+"': " + err)
+                                    if(!!!options.skipFileURLWarnings)
+                                        emitWarning("Could not open source file '" + source + "': " + err)
                                     return callback(null, null)
                                 }
                                 addDependency(source)

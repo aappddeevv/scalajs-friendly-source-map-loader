@@ -1,6 +1,6 @@
 {
   "name": "scalajs-friendly-source-map-loader",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "aappddeevv",
   "description": "Drop in replacement for source-map-loader that understands file:// and https:// in the scala.js output source map files.",
   "scripts": {},

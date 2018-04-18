@@ -3,17 +3,27 @@ and `http[s]://` prefixes in source map files like the kind you find in scala.js
 generated source maps.
 
 Including scala sources increases the map size so use `bundleHttp: false` to not
-bundle them. They are bundled by default.
+bundle them. They are bundled by default. Warnings that "file://" resources
+cannot be found can be turned off using `skipFileURLWarnings` which is true by
+default. If you depend on other scala.js libraries, they may have `file://`
+links embedded that cause warnings.
 
 As a drop-in replacement:
 ```javascript
 ...
             {
                 test: /\.js$/,
+                // use loader defaults
                 loader: ["scalajs-friendly-source-map-loader"],
-                options: {
-                    bundleHttp: true // or false, default is true
-                },
+                // set options explicitly
+                loader: [
+                { 
+                    loader: "scalajs-friendly-source-map-loader",
+                    options: {
+                        skipFileURLWarnings: true, // or false, default is true
+                        bundleHttp: true // or false, default is true
+                    }
+                }],
                 enforce: "pre",
             },
 ```
