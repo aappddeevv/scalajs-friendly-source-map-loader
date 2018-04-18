@@ -14,9 +14,9 @@ As a drop-in replacement:
             {
                 test: /\.js$/,
                 // use loader defaults
-                loader: ["scalajs-friendly-source-map-loader"],
+                use: ["scalajs-friendly-source-map-loader"],
                 // set options explicitly
-                loader: [
+                use: [
                 { 
                     loader: "scalajs-friendly-source-map-loader",
                     options: {
@@ -32,10 +32,13 @@ To use in your loaders *only* for your scalajs output:
 ...
             {
                 test: /\.js$/,
-                loader: ["scalajs-friendly-source-map-loader"],                
-                options: {
-                    bundleHttp: true
-                },
+                use: [
+                  { 
+                      loader: "scalajs-friendly-source-map-loader"
+                      options: {
+                        bundleHttp: false // or use the short version above
+                       },
+                  }],
                 enforce: "pre",
                 include: [scalapath],
             },
@@ -50,4 +53,4 @@ To use in your loaders *only* for your scalajs output:
 ```
 
 Loaders are used right to lift so the normal source-map-loader will run first
-but *ignore* the scala.js output leaving that to the friendly loader.
+but *ignore* the scala.js output leaving the scala js file to the friendly loader.
