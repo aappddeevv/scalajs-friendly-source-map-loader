@@ -1,12 +1,10 @@
 {
   "name": "scalajs-friendly-source-map-loader",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "aappddeevv",
   "description": "Drop in replacement for source-map-loader that understands file:// and https:// in the scala.js output source map files.",
-  "scripts": {
-  },
-  "devDependencies": {
-  },
+  "scripts": {},
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git://github.com/aappddeevv/scalajs-friendly-source-map-loader.git"
@@ -19,8 +17,8 @@
   ],
   "dependencies": {
     "async": "^2.5.0",
-      "loader-utils": "~0.2.2",
-        "node-fetch": "^2.1.2",
-      "source-map": "~0.6.1"
+    "loader-utils": "^1.1.0",
+    "node-fetch": "^2.1.2",
+    "source-map": "~0.6.1"
   }
 }

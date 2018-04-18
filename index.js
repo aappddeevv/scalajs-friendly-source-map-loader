@@ -79,7 +79,7 @@ module.exports = function(input, inputMap) {
 	    async.map(missingSources, function(source, callback) {
                 // source is the source "url" file://,http:// or a plain OS file path that needs resolving
                 if(source.startsWith("http")) {
-                    if(!!!options.bundleHttp) callback(null, null)
+                    if(options && !!!options.bundleHttp) callback(null, null)
                     else {
                         fetch(source)
                             .then(resp => {
