@@ -6,7 +6,12 @@ Including scala sources increases the map size so use `bundleHttp: false` to not
 bundle them. They are bundled by default. Warnings that "file://" resources
 cannot be found can be turned off using `skipFileURLWarnings` which is true by
 default. If you depend on other scala.js libraries, they may have `file://`
-links embedded that cause warnings.
+links embedded that cause warnings. If you work offline and do not have access
+to http resources (this loader does not cache http resources), then set your
+`bundleHttp` option using a nodejs environment variable: `bundleHttp:
+process.env.OFFLINE` then set the environment variable `OFFLINE="true"` before
+you run webpack. Note that "true" is in quotes to make at a string environment
+variable.
 
 As a drop-in replacement:
 ```javascript
@@ -27,7 +32,9 @@ As a drop-in replacement:
                 enforce: "pre",
             },
 ```
+
 To use in your loaders *only* for your scalajs output:
+
 ```javascript
 ...
             {
@@ -52,5 +59,7 @@ To use in your loaders *only* for your scalajs output:
 ...
 ```
 
-Loaders are used right to lift so the normal source-map-loader will run first
-but *ignore* the scala.js output leaving the scala js file to the friendly loader.
+Loaders are used right to left so the normal source-map-loader will run first
+but *ignore* the scala.js output leaving the scala js file to the friendly
+loader. `scalapath` is a resolved path to your scala.js compiler output file.
+
