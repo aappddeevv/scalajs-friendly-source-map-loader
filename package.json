@@ -9,7 +9,8 @@
     "loader"
   ],
   "description": "Drop in replacement for source-map-loader that understands file:// and https:// in the scala.js output source map files.",
-  "scripts": {},
+  "scripts": {
+},
   "devDependencies": {
   },
   "repository": {

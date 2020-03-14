@@ -37,7 +37,9 @@ module.exports = function (input, inputMap) {
 			// where fetch resuts are cached, can be abs or relative
 			cachePath: defaultCachePath,
 			// whether cache usage messages should be output
-			nosiyCache: false
+			nosiyCache: false,
+			// false => remove all caching
+			useCache: true,
 		},
 		loaderUtils.getOptions(this)
 	)
@@ -100,7 +102,7 @@ module.exports = function (input, inputMap) {
 					// check local cache for fetched data so we don't have to refetch
 					const filename = url_parse(source).pathname
 					const cache_content_path = path.join(cache_path, filename)
-					if (fs.existsSync(cache_content_path)) {
+					if (options.useCache && fs.existsSync(cache_content_path)) {
 						// it exists, return it
 						if (options.noisyCache) console.log("Cache hit for ", source)
 						addDependency(source)
@@ -116,10 +118,12 @@ module.exports = function (input, inputMap) {
 							.then(resp => {
 								if (resp.ok) {
 									resp.text().then(content => {
-										// save cache entry
-										if (options.noisyCache) console.log("Saving cache content")
-										fs.mkdirSync(path.join(cache_content_path, ".."), { recursive: true })
-										fs.writeFileSync(cache_content_path, content, "utf8")
+										if (options.useCache) {
+											// save cache entry
+											if (options.noisyCache) console.log("Saving cache content")
+											fs.mkdirSync(path.join(cache_content_path, ".."), { recursive: true })
+											fs.writeFileSync(cache_content_path, content, "utf8")
+										}
 										addDependency(source)
 										callback(null, {
 											source: source,

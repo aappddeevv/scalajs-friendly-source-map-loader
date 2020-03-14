@@ -34,7 +34,8 @@ As a drop-in replacement:
                         skipFileURLWarnings: true, // or false, default is true
                         bundleHttp: true // or false, default is true,
 			cachePath: ".scala-js-sources", // cache dir name
-			noisyCache: false // whether cache changes are output
+			noisyCache: false, // whether http cache changes are output
+                        useCache: true, // false => remove any http cache processing
                     }
                 }],
                 enforce: "pre",
