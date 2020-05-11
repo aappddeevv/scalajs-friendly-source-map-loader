@@ -1,3 +1,5 @@
+![npm](https://img.shields.io/npm/v/scalajs-friendly-source-map-loader)
+
 Drop in replacement for source-map-loader but this loader understands `file://`
 and `http[s]://` prefixes in source map files like the kind you find in scala.js
 generated source maps. It is often recommended that scala.js resources
