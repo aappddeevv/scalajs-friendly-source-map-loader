@@ -33,7 +33,7 @@ As a drop-in replacement:
                     options: {
                         skipFileURLWarnings: true, // or false, default is true
                         bundleHttp: true // or false, default is true,
-			cachePath: ".scala-js-sources", // cache dir name
+			cachePath: ".scala-js-sources", // cache dir name, exclude in .gitignore
 			noisyCache: false, // whether http cache changes are output
                         useCache: true, // false => remove any http cache processing
                     }

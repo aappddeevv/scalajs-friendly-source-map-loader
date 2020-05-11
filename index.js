@@ -134,7 +134,7 @@ module.exports = function (input, inputMap) {
 							})
 							.catch(error => {
 								emitWarning("Cannot fetch remote resource '" + source + "': " + error)
-								callback(null, null)
+								callback(null, { source: source, content: ""})
 							})
 					}
 				}
@@ -145,7 +145,7 @@ module.exports = function (input, inputMap) {
 						if (err) {
 							if (!!!options.skipFileURLWarnings)
 								emitWarning("Could not open source file '" + source + "': " + err)
-							return callback(null, null)
+							return callback(null, { source: source, content: ""})
 						}
 						addDependency(source)
 						callback(null, {
@@ -158,13 +158,13 @@ module.exports = function (input, inputMap) {
 				else resolve(context, loaderUtils.urlToRequest(source), function (err, result) {
 					if (err) {
 						emitWarning("Cannot find source file '" + source + "': " + err);
-						return callback(null, null);
+						return callback(null, { source: result, content: ""});
 					}
 					addDependency(result);
 					fs.readFile(result, "utf-8", function (err, content) {
 						if (err) {
 							emitWarning("Cannot open source file '" + result + "': " + err);
-							return callback(null, null);
+							return callback(null, { source: result, content: ""});
 						}
 						callback(null, {
 							source: result,
